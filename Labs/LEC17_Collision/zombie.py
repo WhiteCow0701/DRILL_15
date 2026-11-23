@@ -53,11 +53,12 @@ class Zombie:
         if self.dir < 0:
             image.composite_draw(0, 'h', self.x, self.y, 200, 200)
         else:
-            image.draw(self.x, self.y, 200, 200)
+            image.draw(self.x, self.y, self.size, self.size)
         game_world.draw_collision_box(self)
 
     def get_bb(self):
-        return self.x - 100, self.y - 100, self.x + 100, self.y + 100
+        half = self.size / 2
+        return self.x - half, self.y - half, self.x + half, self.y + half
 
     def handle_collision(self, group, other):
         if group == 'ball:zombie':
