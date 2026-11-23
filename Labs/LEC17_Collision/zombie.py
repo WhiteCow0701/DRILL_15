@@ -1,6 +1,6 @@
 import random
 
-from pico2d import load_image, draw_rectangle, clamp
+from pico2d import load_image, clamp
 
 import game_framework
 import game_world
@@ -51,7 +51,7 @@ class Zombie:
             image.composite_draw(0, 'h', self.x, self.y, 200, 200)
         else:
             image.draw(self.x, self.y, 200, 200)
-        draw_rectangle(*self.get_bb())
+        game_world.draw_collision_box(self)
 
     def get_bb(self):
         return self.x - 100, self.y - 100, self.x + 100, self.y + 100

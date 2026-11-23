@@ -1,7 +1,7 @@
-from pico2d import get_canvas_width, load_image
+from pico2d import get_canvas_width, load_image, draw_rectangle
 
 import game_world
-import game_framework
+import game_framework   
 
 # 단위: 픽셀, 초
 LAUNCH_SPEED_X = 300.0
@@ -37,4 +37,13 @@ class Ball:
 
     def draw(self):
         self.image.draw(self.x, self.y)
+        draw_rectangle(*self.get_bb())
+        
+    def get_bb(self):
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
 
+    def handle_collision(self, group, other):
+        if group == 'boy:ball':
+            game_world.remove_object(self)
+        elif group == 'grass:ball':
+            self.stopped = True
