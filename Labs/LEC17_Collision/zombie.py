@@ -34,6 +34,8 @@ class Zombie:
         self.x, self.y = random.randint(MIN_X, MAX_X), 150
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1, 1])
+        self.size = 200
+        self.hit_count = 0
 
     def update(self):
         dt = game_framework.frame_time
@@ -44,6 +46,7 @@ class Zombie:
         elif self.x < MIN_X:
             self.dir = 1
         self.x = clamp(MIN_X, self.x, MAX_X)
+        self.y = 50 + self.size / 2
 
     def draw(self):
         image = Zombie.images['Walk'][int(self.frame)]
@@ -55,3 +58,15 @@ class Zombie:
 
     def get_bb(self):
         return self.x - 100, self.y - 100, self.x + 100, self.y + 100
+
+    def handle_collision(self, group, other):
+        if group == 'ball:zombie':
+            if other.stopped or self.hit_count >= 2:
+                return
+            self.hit_count += 1
+            if self.hit_count == 1:
+                self.size //= 2
+            else:
+                game_world.remove_object(self)
+        elif group == 'boy:zombie':
+            pass
