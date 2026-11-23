@@ -9,6 +9,7 @@ from transitions import Machine
 import game_world
 from ball import Ball
 
+
 import game_framework
 
 # 달리기 속력을 시속 km에서 초속 m, 다시 초당 픽셀로 변환한다.
@@ -144,6 +145,7 @@ class Boy:
             game_world.add_object(ball, 1)
             game_world.add_collision_pair('grass:ball', None, ball)
             game_world.add_collision_pair('boy:ball', None, ball)
+            game_world.add_collision_pair('zombie:ball', None, ball)
 
     def pause(self):
         self.pressed_keys.clear()

@@ -51,17 +51,17 @@ class Zombie:
     def draw(self):
         image = Zombie.images['Walk'][int(self.frame)]
         if self.dir < 0:
-            image.composite_draw(0, 'h', self.x, self.y, 200, 200)
+            image.composite_draw(0, 'h', self.x, self.y, self.size, self.size)
         else:
             image.draw(self.x, self.y, self.size, self.size)
         game_world.draw_collision_box(self)
 
     def get_bb(self):
         half = self.size / 2
-        return self.x - half, self.y - half, self.x + half, self.y + half
+        return self.x - half, self.y - half, self.x + half, self.y + half + 100
 
     def handle_collision(self, group, other):
-        if group == 'ball:zombie':
+        if group == 'zombie:ball':
             if other.stopped or self.hit_count >= 2:
                 return
             self.hit_count += 1
